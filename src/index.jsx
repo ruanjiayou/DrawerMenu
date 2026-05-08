@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import "./index.css"
 
 const DrawerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ const DrawerMenu = () => {
     const handleTouchStart = (e) => {
       if (e.touches[0].clientX < 40) { // 从左侧边缘 40px 内滑动
         setTouchStart(e.touches[0].clientX);
+        e.preventDefault();
       }
     };
 
@@ -22,7 +24,7 @@ const DrawerMenu = () => {
       }
     };
 
-    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
     window.addEventListener('touchend', handleTouchEnd);
     return () => {
       window.removeEventListener('touchstart', handleTouchStart);
@@ -70,6 +72,7 @@ const DrawerMenu = () => {
       backgroundColor: '#fff',
       boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
       transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
+      transition: 'transform 0.3s ease-in-out',
       transition: 'transform 0.3s ease-in-out',
       zIndex: 999,
       paddingTop: '60px'
@@ -138,7 +141,10 @@ const DrawerMenu = () => {
               <div
                 key={app._id}
                 style={styles.navItem(isActive)}
-                onClick={() => window.location.href = app.path}
+                onClick={() => {
+                  setIsOpen(false)
+                  window.location.href = app.path
+                }}
               >
                 <span style={styles.icon}>{app.icon}</span>
                 <span style={{ fontWeight: isActive ? '600' : '400' }}>{app.title}</span>
