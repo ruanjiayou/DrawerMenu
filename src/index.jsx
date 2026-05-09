@@ -12,7 +12,6 @@ const DrawerMenu = () => {
     const handleTouchStart = (e) => {
       if (e.touches[0].clientX < 40) { // 从左侧边缘 40px 内滑动
         setTouchStart(e.touches[0].clientX);
-        e.preventDefault();
       }
     };
 
@@ -102,7 +101,6 @@ const DrawerMenu = () => {
     fetch('https://jiayou.work/gw/api/v1/public/remote/apps/')
       .then(async (response) => {
         const body = await response.json()
-        console.log(body)
         if (body.code === 0) {
           setApps(body.data.items)
         } else {
@@ -143,7 +141,8 @@ const DrawerMenu = () => {
                 style={styles.navItem(isActive)}
                 onClick={() => {
                   setIsOpen(false)
-                  window.location.href = app.path
+                  window.location.replace(window.location.origin + app.path)
+                  // window.location.href = app.path
                 }}
               >
                 <span style={styles.icon}>{app.icon}</span>
