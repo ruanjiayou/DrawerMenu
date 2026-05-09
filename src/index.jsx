@@ -10,7 +10,7 @@ const DrawerMenu = () => {
   // 1. 手势处理逻辑
   useEffect(() => {
     const handleTouchStart = (e) => {
-      if (e.touches[0].clientX < 40) { // 从左侧边缘 40px 内滑动
+      if (e.touches[0].clientX < 15) { // 从左侧边缘 40px 内滑动
         setTouchStart(e.touches[0].clientX);
       }
     };
@@ -18,7 +18,7 @@ const DrawerMenu = () => {
     const handleTouchEnd = (e) => {
       if (touchStart !== null) {
         const touchEnd = e.changedTouches[0].clientX;
-        if (touchEnd - touchStart > 80) setIsOpen(true);
+        if (touchEnd - touchStart > 50) setIsOpen(true);
         setTouchStart(null);
       }
     };
@@ -71,7 +71,6 @@ const DrawerMenu = () => {
       backgroundColor: '#fff',
       boxShadow: '2px 0 10px rgba(0,0,0,0.1)',
       transform: isOpen ? 'translateX(0)' : 'translateX(-100%)',
-      transition: 'transform 0.3s ease-in-out',
       transition: 'transform 0.3s ease-in-out',
       zIndex: 999,
       paddingTop: '60px'
